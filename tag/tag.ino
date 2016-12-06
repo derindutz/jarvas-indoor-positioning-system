@@ -3,9 +3,33 @@
 #include "DW1000Device.h"
 #include <MatrixMath.h>
 #include <math.h>
-//A3: 1
-//A2: 3
-//A1: 2
+
+#define CALIBRATE_OFFSET false
+#define CALIBRATE_MULTIPLIER false
+#define CALIBRATION_DISTANCE 1.0
+
+#define BEACON_1_ADDRESS 0x1A1A
+#define BEACON_2_ADDRESS 0x2A1A
+#define BEACON_3_ADDRESS 0x1A3A
+
+#define BEACON_1_X 10.0f
+#define BEACON_1_Y 5.0f
+
+#define BEACON_2_X 10.0f
+#define BEACON_2_Y 0.0f
+
+#define BEACON_3_X 0.0f
+#define BEACON_3_Y 0.0f
+
+#define BEACON_1_OFFSET -0.09f
+#define BEACON_1_MULTIPLIER 1.2f
+
+#define BEACON_2_OFFSET -0.09f
+#define BEACON_2_MULTIPLIER 0.7257f
+
+#define BEACON_3_OFFSET -0.09f
+#define BEACON_3_MULTIPLIER 1.55f
+
 // connection pins
 const uint8_t PIN_RST = 3; // reset pin
 const uint8_t PIN_IRQ = 7; // irq pin
@@ -16,9 +40,14 @@ volatile float range = 0;
 volatile int address = 0;
 
 volatile float dist[3] = {655.35, 655.35, 655.35};
-float beacons[3][2] = {{0.0f, 2.94f},
-                       {0.0f, 0.0f},
-                       {2.94f, 0.0f}};
+
+float beacons[3][2] = {{BEACON_1_X, BEACON_1_Y},
+                       {BEACON_2_X, BEACON_2_Y},
+                       {BEACON_3_X, BEACON_3_Y}};
+
+float shortestDistanceBeacon1 = 900.0f;
+float shortestDistanceBeacon2 = 900.0f;
+float shortestDistanceBeacon3 = 900.0f;
 
 float A[3][3];
 void setup() {
@@ -50,15 +79,50 @@ void loop() {
 }
 
 void newRange() {
+    
   address = DW1000Ranging.getDistantDevice()->getShortAddress();
 
   range = DW1000Ranging.getDistantDevice()->getRange();
-  range -= 0.2;
-  range *= 0.7257;
-  dist[0] = address==0x1A1A?range:dist[0];
-  dist[1] = address==0x2A1A?range:dist[1];
-  dist[2] = address==0x1A3A?range:dist[2];
-  Serial.print("1: ");Serial.print(dist[0]);Serial.print(" 2: ");Serial.print(dist[1]);Serial.print(" 3: ");Serial.print(dist[2]);
+  if(range < 0) address = NULL;
+  if(address == BEACON_1_ADDRESS){
+    range += CALIBRATE_OFFSET?0.0f:BEACON_1_OFFSET;
+    range /= CALIBRATE_MULTIPLIER?1.0f:BEACON_1_MULTIPLIER;
+    dist[0] = range;
+    if(CALIBRATE_OFFSET){
+      if(dist[0] < shortestDistanceBeacon1 && dist[0] > 0){
+        shortestDistanceBeacon1 = dist[0];
+      }
+    }
+  }
+  else if(address == BEACON_2_ADDRESS){
+    range += CALIBRATE_OFFSET?0.0f:BEACON_2_OFFSET;
+    range /= CALIBRATE_MULTIPLIER?1.0f:BEACON_2_MULTIPLIER;
+    dist[1] = range;
+    if(CALIBRATE_OFFSET){
+      if(dist[1] < shortestDistanceBeacon2 && dist[1] > 0){
+        shortestDistanceBeacon2 = dist[1];
+      }
+    }
+  }
+  else if(address == BEACON_3_ADDRESS){
+    range += CALIBRATE_OFFSET?0.0f:BEACON_3_OFFSET;
+    range /= CALIBRATE_MULTIPLIER?1.0f:BEACON_3_MULTIPLIER;
+    dist[2] = range;
+    if(CALIBRATE_OFFSET){
+      if(dist[2] < shortestDistanceBeacon3 && dist[2] > 0){
+        shortestDistanceBeacon3 = dist[2];
+      }
+    }
+  }
+  if(CALIBRATE_OFFSET){
+    Serial.print("Offset 1: ");Serial.print(shortestDistanceBeacon1);Serial.print(" Offset 2: ");Serial.print(shortestDistanceBeacon2);Serial.print(" Offset 3: ");Serial.print(shortestDistanceBeacon3);
+  }
+  else if(CALIBRATE_MULTIPLIER){
+    Serial.print("MULT 1: ");Serial.print(dist[0]/CALIBRATION_DISTANCE);Serial.print(" MULT 2: ");Serial.print(dist[1]/CALIBRATION_DISTANCE);Serial.print(" MULT 3: ");Serial.print(dist[2]/CALIBRATION_DISTANCE);
+  }
+  else{
+    Serial.print("1: ");Serial.print(dist[0]);Serial.print(" 2: ");Serial.print(dist[1]);Serial.print(" 3: ");Serial.print(dist[2]);
+  }
   
   // ITERATIVE STEPS BELOW
 

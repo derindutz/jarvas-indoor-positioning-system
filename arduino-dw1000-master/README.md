@@ -95,5 +95,7 @@ DW1000.receivePermanently(true);
 DW1000.startReceive();
 ...
 ```
+##Changes from the original DW1000 Library by thotro
 
+This library supports sending messages between the tag and other beacons. It is implemented by sending a "blink" pulse every 300 mS with location data from the tag, broadcast to all other tags. 
 
