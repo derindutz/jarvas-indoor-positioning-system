@@ -1,0 +1,6 @@
+# Setup Instructions
+- Make sure you have npm and browserify (```npm install -g browserify```).
+- Run ```npm install```
+- Run ```browserify client.js -o public/main.js```
+- Run ```npm start```
+- Go to localhost:9000 and enjoy!

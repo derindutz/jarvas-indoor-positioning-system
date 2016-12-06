@@ -1,0 +1,28 @@
+.ct-series-a .ct-point {
+  stroke: red;
+  stroke-width: 20px;
+  stroke-linecap: square;
+}
+
+.ct-series-b .ct-point {
+  overflow: visible;
+  stroke: #4fd5ff;
+  stroke-width: 20px;
+  stroke-opacity: 0.6;
+  position: absolute;
+  animation: pulsate 1.5s ease-out infinite;
+}
+
+.ct-series-c .ct-point {
+  stroke: #3d66e2;
+  stroke-width: 20px;
+}
+
+@-webkit-keyframes pulsate {
+  from {stroke-width: 20px; stroke-opacity: 0.6;}
+  to {stroke-width: 60px; stroke-opacity: 0.0;}
+}
+
+.ct-label.ct-horizontal {
+  transform: rotate(40deg);
+}

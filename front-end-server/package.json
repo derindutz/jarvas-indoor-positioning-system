@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "body-parser": "*",
+    "chartist": "^0.10.1",
+    "express": "*",
+    "serve-favicon": "^2.3.2",
+    "superagent": "*"
+  },
+  "scripts": {
+    "watch": "watchify client.js -o public/main.js",
+    "start": "node server.js"
+  }
+}
