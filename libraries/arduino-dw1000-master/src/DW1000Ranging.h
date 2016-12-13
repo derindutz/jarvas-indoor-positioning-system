@@ -123,8 +123,8 @@ private:
 	static short        counterForBlink;
 	static int32_t      timer2;
 	static long         locTimeout;
-	static uint16_t        locX;
-	static uint16_t        locY;	
+	static int16_t        locX;
+	static int16_t        locY;	
 	//Handlers:
 	static void (* _handleNewRange)(void);
 	

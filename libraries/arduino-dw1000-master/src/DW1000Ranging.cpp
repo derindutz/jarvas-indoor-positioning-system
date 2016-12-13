@@ -57,8 +57,8 @@ long             DW1000RangingClass::timer             = 0;
 short            DW1000RangingClass::counterForBlink   = 0;
 int32_t            DW1000RangingClass::timer2            = 0;
 long               DW1000RangingClass::locTimeout =  0;
-uint16_t           DW1000RangingClass::locX = 65535;
-uint16_t           DW1000RangingClass::locY = 65535;
+int16_t           DW1000RangingClass::locX = 65535;
+int16_t           DW1000RangingClass::locY = 65535;
 // data buffer
 byte          DW1000RangingClass::data[LEN_DATA];
 // reset line to the chip
@@ -477,10 +477,10 @@ void DW1000RangingClass::loop() {
 			// Serial.println("Hi");
 			output = ~output;
 			digitalWrite(5,output);
-			uint16_t x = 0;
+			int16_t x = 0;
 			x = data[12]<<8;
 			x += data[13];
-			uint16_t y = 0;
+			int16_t y = 0;
 			y = data[14]<<8;
 			y += data[15];
 			// Serial.print(x);
@@ -820,8 +820,6 @@ void DW1000RangingClass::transmitLoc() {
    	byte bytes[4];
     // float2Bytes(loc,&bytes[1]);
 	// memcpy(data[12],bytes,4);
-	uint16_t x = 50000;
-	uint16_t y = 50010;
 	// memcpy(data+12,test,2);
 	data[12] = locX >> 8;
 	data[13] = locX & 0b11111111;

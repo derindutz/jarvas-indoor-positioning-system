@@ -240,5 +240,7 @@ void newRange() {
     digitalWrite(6,HIGH);
   }
   else digitalWrite(6,LOW);
+
+  DW1000Ranging.setLoc(estimate[0], estimate[1]);
 }
 
