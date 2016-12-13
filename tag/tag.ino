@@ -9,6 +9,8 @@
 #define CALIBRATE_MULTIPLIER false
 #define CALIBRATION_DISTANCE 1.0
 
+#define USE_MEDIAN_FILT true
+
 #define BEACON_1_ADDRESS 0x1A1A
 #define BEACON_2_ADDRESS 0x2A1A
 #define BEACON_3_ADDRESS 0x1A3A
@@ -178,8 +180,7 @@ void newRange() {
     range *= CALIBRATE_MULTIPLIER?1.0f:BEACON_1_MULTIPLIER;
     range += CALIBRATE_OFFSET?0.0f:BEACON_1_OFFSET;
     cir_enqueue(cir1,range);
-    //dist[0] = cir_median(cir1);
-    dist[0] = range;
+    dist[0] = (USE_MEDIAN_FILT)?cir_median(cir1):range;
     
     if(CALIBRATE_OFFSET){
       if(dist[0] < shortestDistanceBeacon1 && dist[0] > 0){
@@ -191,8 +192,7 @@ void newRange() {
     range *= CALIBRATE_MULTIPLIER?1.0f:BEACON_2_MULTIPLIER;
     range += CALIBRATE_OFFSET?0.0f:BEACON_2_OFFSET;
     cir_enqueue(cir2,range);
-    //dist[1] = cir_median(cir2);
-    dist[1] = range;
+    dist[1] = (USE_MEDIAN_FILT)?cir_median(cir2):range;
     
     if(CALIBRATE_OFFSET){
       if(dist[1] < shortestDistanceBeacon2 && dist[1] > 0){
@@ -204,8 +204,7 @@ void newRange() {
     range *= CALIBRATE_MULTIPLIER?1.0f:BEACON_3_MULTIPLIER;
     range += CALIBRATE_OFFSET?0.0f:BEACON_3_OFFSET;
     cir_enqueue(cir3,range);
-    //dist[2] = cir_median(cir3);
-    dist[2] = range;
+    dist[2] = (USE_MEDIAN_FILT)?cir_median(cir3):range;
     
     if(CALIBRATE_OFFSET){
       if(dist[2] < shortestDistanceBeacon3 && dist[2] > 0){
