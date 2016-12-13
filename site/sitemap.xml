@@ -3,8 +3,16 @@
 
     
     <url>
-     <loc>/</loc>
-     <lastmod>2016-12-08</lastmod>
+     <loc>None/</loc>
+     <lastmod>2016-12-13</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/hardware/</loc>
+     <lastmod>2016-12-13</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

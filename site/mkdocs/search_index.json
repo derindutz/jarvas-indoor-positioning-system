@@ -1,24 +1,44 @@
 {
     "docs": [
         {
-            "location": "/", 
-            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "location": "/",
+            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
             "title": "Home"
-        }, 
+        },
         {
-            "location": "/#welcome-to-mkdocs", 
-            "text": "For full documentation visit  mkdocs.org .", 
+            "location": "/#welcome-to-mkdocs",
+            "text": "For full documentation visit  mkdocs.org .",
             "title": "Welcome to MkDocs"
-        }, 
+        },
         {
-            "location": "/#commands", 
-            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.", 
+            "location": "/#commands",
+            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.",
             "title": "Commands"
-        }, 
+        },
         {
-            "location": "/#project-layout", 
-            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "location": "/#project-layout",
+            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
             "title": "Project layout"
+        },
+        {
+            "location": "/hardware/",
+            "text": "JARVAS Hardware\n\n\nThe core of the JARVAS system is the DWM1000 (\n\nproduct page\n,\n\ndatasheet\n\n) radio module, an ultra wideband transciever module optimized for time of\nflight ranging systems, and the Atmega32U4 processor.\n\n\nThere are two versions of the JARVAS hardware: a base station board that\nsupports WiFi (using an\n\nESP8266\n\n) and is designed for easy debugging, and a small, low-cost tag module.\nThe system requires at least one of the anchors have WiFi support so transmit\nlocation data to a server, however all other anchors and tags in the system\nmay use either the larger base station board or the small tag board.\n\n\nThe Tag\n\n\n\n\nThe tag board hosts an Atmega32U4, a single-cell LiPo/Li-Ion connector, a few\ndebugging LEDs, and the DWM1000 radio module. It is essentially a\npurpose-built version of the popular \nSparkFun Pro Micro\n\nor the \nAdafruit Atmega32U4 breakout\n\nwith a DWM1000 module built in.\n\n\nIn total, it measures 1.5\"x0.9\" without the programming tag.\n\n\nNote that while we call this this \"tag\", it is completely capable of being\nused as an anchor as well, provided that there is at least one anchor in the\nsystem which supports WiFi.\n\n\nProgramming Header\n\n\n\n\nThe tag comes with a break-away section for initial programming. The\nsection at the top contains test points for the 3.3 V and GND rails and an\nICSP header. This ICSP header can be used to program the Atmega32U4. If you\nchoose to install the Arduino firmware, as described \nhere\n,\nyou can program this board directly over USB through the Arduino software.\nOnce you verify that everythings is working, this top section can be broken\noff to reduce the size and height of the PCB.\n\n\n\n\nThe Anchor\n\n\n\n\nThe anchor is the larger, more debug-friendly, and WiFi-supporting version.\nIt is extremely similar to the tag except for the addition of an ESP8266 WiFi\nModule and using an off-the-shelf Arduino Pro Micro instead of having an\nAtmega32U4 on-board. This means that no programmer is required to get this\nboard up and running. The downside, though, is that it is significantly larger\nand costs more.",
+            "title": "Hardware"
+        },
+        {
+            "location": "/hardware/#jarvas-hardware",
+            "text": "The core of the JARVAS system is the DWM1000 ( product page , datasheet \n) radio module, an ultra wideband transciever module optimized for time of\nflight ranging systems, and the Atmega32U4 processor.  There are two versions of the JARVAS hardware: a base station board that\nsupports WiFi (using an ESP8266 \n) and is designed for easy debugging, and a small, low-cost tag module.\nThe system requires at least one of the anchors have WiFi support so transmit\nlocation data to a server, however all other anchors and tags in the system\nmay use either the larger base station board or the small tag board.",
+            "title": "JARVAS Hardware"
+        },
+        {
+            "location": "/hardware/#the-tag",
+            "text": "The tag board hosts an Atmega32U4, a single-cell LiPo/Li-Ion connector, a few\ndebugging LEDs, and the DWM1000 radio module. It is essentially a\npurpose-built version of the popular  SparkFun Pro Micro \nor the  Adafruit Atmega32U4 breakout \nwith a DWM1000 module built in.  In total, it measures 1.5\"x0.9\" without the programming tag.  Note that while we call this this \"tag\", it is completely capable of being\nused as an anchor as well, provided that there is at least one anchor in the\nsystem which supports WiFi.  Programming Header   The tag comes with a break-away section for initial programming. The\nsection at the top contains test points for the 3.3 V and GND rails and an\nICSP header. This ICSP header can be used to program the Atmega32U4. If you\nchoose to install the Arduino firmware, as described  here ,\nyou can program this board directly over USB through the Arduino software.\nOnce you verify that everythings is working, this top section can be broken\noff to reduce the size and height of the PCB.",
+            "title": "The Tag"
+        },
+        {
+            "location": "/hardware/#the-anchor",
+            "text": "The anchor is the larger, more debug-friendly, and WiFi-supporting version.\nIt is extremely similar to the tag except for the addition of an ESP8266 WiFi\nModule and using an off-the-shelf Arduino Pro Micro instead of having an\nAtmega32U4 on-board. This means that no programmer is required to get this\nboard up and running. The downside, though, is that it is significantly larger\nand costs more.",
+            "title": "The Anchor"
         }
     ]
 }
