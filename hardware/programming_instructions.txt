@@ -1,5 +1,6 @@
 Programming the SparkFun Caterina bootloader onto an Atmega32U4
-20161114
+Written: 2016-11-14
+Updated: 2016-12-13
 
 This process probably needs to be optimized and refined, but the following appears to work. This was tested on Linux (Ubuntu 16.04), but should be portable to any platform.
 
@@ -32,9 +33,13 @@ avrdude: safemode: Fuses OK (E:F3, H:99, L:5E)
 avrdude done.  Thank you.
 -----------------------------------------------------
 
+It will also create three files in your working directory (efuse.hex, hfuse.hex, and lfuse.hex) that contain the current fuse settings. See fuse_bits_example/before for example output of this command before you configure the fuses in Step 1 (below) and fuse_bits_example/after for what you should have after Step 1.
+
 Step 1:
 avrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U flash:w:Caterina-promicro8.hex -U hfuse:w:0xd8:m -U lfuse:w:0xff:m -U efuse:w:0xfe:m
 Answer 'y' at the prompt. Don't worry if it says the efuse could not be changed.
+
+That's it!
 
 *** Useful references ***
 
