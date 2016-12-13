@@ -18,7 +18,16 @@ void setup() {
 
 void loop() {
   DW1000Ranging.loop();
+
+  Serial.print(DW1000Ranging.getTagX());
+  Serial.print(" ");
+  Serial.println(DW1000Ranging.getTagY());
+  if(DW1000Ranging.getTagY() > 4.0f){
+    digitalWrite(6,HIGH);
+  }
+  else digitalWrite(6,LOW);
 }
+
 void newRange() {
   // Empty.  
 }
