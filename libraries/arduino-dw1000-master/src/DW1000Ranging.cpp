@@ -1028,7 +1028,6 @@ void DW1000RangingClass::visualizeDatas(byte datas[]) {
 	Serial.println(string);
 }
 float DW1000RangingClass::filterValue(float value, float previousValue, uint16_t numberOfElements) {
-	
 	float k = 2.0f / ((float)numberOfElements + 1.0f);
 	return (value * k) + previousValue * (1.0f - k);
 }
