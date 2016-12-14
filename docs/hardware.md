@@ -1,5 +1,7 @@
 # JARVAS Hardware
 
+<img src="../img/tag_render.png" width="50%" alt="JARVAS Tag" /><img src="../img/anchor_render.png" width="50%" alt="JARVAS Anchor" />
+
 The core of the JARVAS system is the DWM1000 (
 [product page](http://www.decawave.com/products/dwm1000-module),
 [datasheet](http://www.decawave.com/sites/default/files/resources/dwm1000-datasheet-v1.3.pdf)

@@ -2,27 +2,32 @@
     "docs": [
         {
             "location": "/",
-            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
+            "text": "JARVAS Indoor Positioning System\n\n\n\n\nJARVAS (Just A Rather Very Average System) is an indoor positioning system, in which a wearable tag communicates with multiple stationary anchors to determine its position.\n\n\nHow to Build It\n\n\nOur primary documentatio for how to re-create our setup lives on \nInstructables\n.\n\n\nSource Files\n\n\nAll of our source files (including software, PCB design files, and MATLAB simulation code) live in our \nGitHub repository\n.\n\n\nTechnical Details\n\n\nThis website documents some of the more interesting technical aspects of the project. If you're looking to modify, extend, or get inspiration from what we did, read on.",
             "title": "Home"
         },
         {
-            "location": "/#welcome-to-mkdocs",
-            "text": "For full documentation visit  mkdocs.org .",
-            "title": "Welcome to MkDocs"
+            "location": "/#jarvas-indoor-positioning-system",
+            "text": "JARVAS (Just A Rather Very Average System) is an indoor positioning system, in which a wearable tag communicates with multiple stationary anchors to determine its position.",
+            "title": "JARVAS Indoor Positioning System"
         },
         {
-            "location": "/#commands",
-            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.",
-            "title": "Commands"
+            "location": "/#how-to-build-it",
+            "text": "Our primary documentatio for how to re-create our setup lives on  Instructables .",
+            "title": "How to Build It"
         },
         {
-            "location": "/#project-layout",
-            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.",
-            "title": "Project layout"
+            "location": "/#source-files",
+            "text": "All of our source files (including software, PCB design files, and MATLAB simulation code) live in our  GitHub repository .",
+            "title": "Source Files"
+        },
+        {
+            "location": "/#technical-details",
+            "text": "This website documents some of the more interesting technical aspects of the project. If you're looking to modify, extend, or get inspiration from what we did, read on.",
+            "title": "Technical Details"
         },
         {
             "location": "/hardware/",
-            "text": "JARVAS Hardware\n\n\nThe core of the JARVAS system is the DWM1000 (\n\nproduct page\n,\n\ndatasheet\n\n) radio module, an ultra wideband transciever module optimized for time of\nflight ranging systems, and the Atmega32U4 processor.\n\n\nThere are two versions of the JARVAS hardware: a base station board that\nsupports WiFi (using an\n\nESP8266\n\n) and is designed for easy debugging, and a small, low-cost tag module.\nThe system requires at least one of the anchors have WiFi support so transmit\nlocation data to a server, however all other anchors and tags in the system\nmay use either the larger base station board or the small tag board.\n\n\nThe Tag\n\n\n\n\nThe tag board hosts an Atmega32U4, a single-cell LiPo/Li-Ion connector, a few\ndebugging LEDs, and the DWM1000 radio module. It is essentially a\npurpose-built version of the popular \nSparkFun Pro Micro\n\nor the \nAdafruit Atmega32U4 breakout\n\nwith a DWM1000 module built in.\n\n\nIn total, it measures 1.5\"x0.9\" without the programming tag.\n\n\nNote that while we call this this \"tag\", it is completely capable of being\nused as an anchor as well, provided that there is at least one anchor in the\nsystem which supports WiFi.\n\n\nProgramming Header\n\n\n\n\nThe tag comes with a break-away section for initial programming. The\nsection at the top contains test points for the 3.3 V and GND rails and an\nICSP header. This ICSP header can be used to program the Atmega32U4. If you\nchoose to install the Arduino firmware, as described \nhere\n,\nyou can program this board directly over USB through the Arduino software.\nOnce you verify that everythings is working, this top section can be broken\noff to reduce the size and height of the PCB.\n\n\n\n\nThe Anchor\n\n\n\n\nThe anchor is the larger, more debug-friendly, and WiFi-supporting version.\nIt is extremely similar to the tag except for the addition of an ESP8266 WiFi\nModule and using an off-the-shelf Arduino Pro Micro instead of having an\nAtmega32U4 on-board. This means that no programmer is required to get this\nboard up and running. The downside, though, is that it is significantly larger\nand costs more.",
+            "text": "JARVAS Hardware\n\n\n\n\nThe core of the JARVAS system is the DWM1000 (\n\nproduct page\n,\n\ndatasheet\n\n) radio module, an ultra wideband transciever module optimized for time of\nflight ranging systems, and the Atmega32U4 processor.\n\n\nThere are two versions of the JARVAS hardware: a base station board that\nsupports WiFi (using an\n\nESP8266\n\n) and is designed for easy debugging, and a small, low-cost tag module.\nThe system requires at least one of the anchors have WiFi support so transmit\nlocation data to a server, however all other anchors and tags in the system\nmay use either the larger base station board or the small tag board.\n\n\nThe Tag\n\n\n\n\nThe tag board hosts an Atmega32U4, a single-cell LiPo/Li-Ion connector, a few\ndebugging LEDs, and the DWM1000 radio module. It is essentially a\npurpose-built version of the popular \nSparkFun Pro Micro\n\nor the \nAdafruit Atmega32U4 breakout\n\nwith a DWM1000 module built in.\n\n\nIn total, it measures 1.5\"x0.9\" without the programming tag.\n\n\nNote that while we call this this \"tag\", it is completely capable of being\nused as an anchor as well, provided that there is at least one anchor in the\nsystem which supports WiFi.\n\n\nProgramming Header\n\n\n\n\nThe tag comes with a break-away section for initial programming. The\nsection at the top contains test points for the 3.3 V and GND rails and an\nICSP header. This ICSP header can be used to program the Atmega32U4. If you\nchoose to install the Arduino firmware, as described \nhere\n,\nyou can program this board directly over USB through the Arduino software.\nOnce you verify that everythings is working, this top section can be broken\noff to reduce the size and height of the PCB.\n\n\n\n\nThe Anchor\n\n\n\n\nThe anchor is the larger, more debug-friendly, and WiFi-supporting version.\nIt is extremely similar to the tag except for the addition of an ESP8266 WiFi\nModule and using an off-the-shelf Arduino Pro Micro instead of having an\nAtmega32U4 on-board. This means that no programmer is required to get this\nboard up and running. The downside, though, is that it is significantly larger\nand costs more.",
             "title": "Hardware"
         },
         {
@@ -39,6 +44,31 @@
             "location": "/hardware/#the-anchor",
             "text": "The anchor is the larger, more debug-friendly, and WiFi-supporting version.\nIt is extremely similar to the tag except for the addition of an ESP8266 WiFi\nModule and using an off-the-shelf Arduino Pro Micro instead of having an\nAtmega32U4 on-board. This means that no programmer is required to get this\nboard up and running. The downside, though, is that it is significantly larger\nand costs more.",
             "title": "The Anchor"
+        },
+        {
+            "location": "/firmware/",
+            "text": "Programming Arduino Firmware on an Atmega32U4\n\n\nThis page is not really specific to this project and should be useful to anyone trying to program Arduino firmware onto an \nAtmega32U4\n chip.\n\n\nWhat you'll need\n\n\nYou will need:\n\n\n\n\nAn ICSP programmer (such as the \nJTAGICE3\n)\n\n\nThe \navrdude\n software\n\n\nFirmware for the chip. We used SparkFun's \nCaterina\n bootloader (Caterina-promicro8.bin from \nhere\n)\n\n\nA board with an Atmega32U4 and an ICSP header, such as our \nTag Board\n\n\n\n\nTip for Linux users\n\n\nYou may need to setup port permission for your programmer. For the JTAGICE3, you'll need to create a \n/etc/udev/rules.d/98-local-jtagice3.rules\n file with the following line:\n\n\nSUBSYSTEM==\"usb\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"2140\", GROUP=\"dialout\"\n\n\n\n\nAlso, be sure your user is in the \ndialout\n group.\n\n\nInstructions\n\n\n\n\nStep 1: Hook up your programmer\n\n\nConnect your programmer to the ICSP header on your board. Double check the pinouts and orientations (many ICSP connectors are not keyed) before powering things up.\n\n\nRemember that your programmer generally does not supply power to the board, so you'll need to supply that yourself.\n\n\nStep 2: Test the connection\n\n\nThe following command will read the three sets of fuse bits from the microcontroller and write the values to three text files on your system:\n\n\navrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U efuse:r:efuse.hex:h -U hfuse:r:hfuse.hex:h -U lfuse:r:lfuse.hex:h\n\n\n\n\nYou should get some output that ends with:\n\n\navrdude: safemode: hfuse reads as 99\navrdude: safemode: efuse reads as F3\navrdude: safemode: Fuses OK (E:F3, H:99, L:5E)\n\navrdude done.  Thank you.\n\n\n\n\nStep 3: Programming\n\n\nWith the firmware file placed in your working directory, run the following command to set the fuse bits and program your chip:\n\n\navrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U flash:w:Caterina-promicro8.hex -U hfuse:w:0xd8:m -U lfuse:w:0xff:m -U efuse:w:0xfe:m\n\n\n\n\nIt may fail to write the efuse. If prompted, answer 'y' to retry. If it fails, don't worry.\n\n\nStep 4: Try it!\n\n\nPlug your board into your computer over USB and program it with the Arduino software.\n\n\nNotes and References\n\n\nThe above commands assume you're using a JTAGICE3 programmer to program an Atmega32U4 clocekd at 8 MHz with a 3.3V supply voltage. If any of those things are not quite the same for you, you'll have to adjust things a bit.\n\n\nYou can find fuse bit settings that go along with the various SparkFun firmwares on \ntheir repository\n.\n\n\nUseful References\n\n\n\n\nFuse bit calculator\n\n\nJTAGICE3 Pinout\n\n\nAVRDUDE Refernce\n\n\nA \nblog post\n from someone else who has done this",
+            "title": "Installing Arduino Firmware"
+        },
+        {
+            "location": "/firmware/#programming-arduino-firmware-on-an-atmega32u4",
+            "text": "This page is not really specific to this project and should be useful to anyone trying to program Arduino firmware onto an  Atmega32U4  chip.",
+            "title": "Programming Arduino Firmware on an Atmega32U4"
+        },
+        {
+            "location": "/firmware/#what-youll-need",
+            "text": "You will need:   An ICSP programmer (such as the  JTAGICE3 )  The  avrdude  software  Firmware for the chip. We used SparkFun's  Caterina  bootloader (Caterina-promicro8.bin from  here )  A board with an Atmega32U4 and an ICSP header, such as our  Tag Board   Tip for Linux users  You may need to setup port permission for your programmer. For the JTAGICE3, you'll need to create a  /etc/udev/rules.d/98-local-jtagice3.rules  file with the following line:  SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"2140\", GROUP=\"dialout\"  Also, be sure your user is in the  dialout  group.",
+            "title": "What you'll need"
+        },
+        {
+            "location": "/firmware/#instructions",
+            "text": "Step 1: Hook up your programmer  Connect your programmer to the ICSP header on your board. Double check the pinouts and orientations (many ICSP connectors are not keyed) before powering things up.  Remember that your programmer generally does not supply power to the board, so you'll need to supply that yourself.  Step 2: Test the connection  The following command will read the three sets of fuse bits from the microcontroller and write the values to three text files on your system:  avrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U efuse:r:efuse.hex:h -U hfuse:r:hfuse.hex:h -U lfuse:r:lfuse.hex:h  You should get some output that ends with:  avrdude: safemode: hfuse reads as 99\navrdude: safemode: efuse reads as F3\navrdude: safemode: Fuses OK (E:F3, H:99, L:5E)\n\navrdude done.  Thank you.  Step 3: Programming  With the firmware file placed in your working directory, run the following command to set the fuse bits and program your chip:  avrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U flash:w:Caterina-promicro8.hex -U hfuse:w:0xd8:m -U lfuse:w:0xff:m -U efuse:w:0xfe:m  It may fail to write the efuse. If prompted, answer 'y' to retry. If it fails, don't worry.  Step 4: Try it!  Plug your board into your computer over USB and program it with the Arduino software.",
+            "title": "Instructions"
+        },
+        {
+            "location": "/firmware/#notes-and-references",
+            "text": "The above commands assume you're using a JTAGICE3 programmer to program an Atmega32U4 clocekd at 8 MHz with a 3.3V supply voltage. If any of those things are not quite the same for you, you'll have to adjust things a bit.  You can find fuse bit settings that go along with the various SparkFun firmwares on  their repository .  Useful References   Fuse bit calculator  JTAGICE3 Pinout  AVRDUDE Refernce  A  blog post  from someone else who has done this",
+            "title": "Notes and References"
         },
         {
             "location": "/localization/",

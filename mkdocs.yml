@@ -3,6 +3,7 @@ theme: readthedocs
 pages:
 - Home: index.md
 - Hardware: hardware.md
+- Installing Arduino Firmware: firmware.md
 - Localization Algorithm: localization.md
 - Filtering: filtering.md
 

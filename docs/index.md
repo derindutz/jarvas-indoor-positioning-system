@@ -1,17 +1,17 @@
-# Welcome to MkDocs
+# JARVAS Indoor Positioning System
 
-For full documentation visit [mkdocs.org](http://mkdocs.org).
+![alt text](img/overview.jpg "JARVAS System")
 
-## Commands
+JARVAS (Just A Rather Very Average System) is an indoor positioning system, in which a wearable tag communicates with multiple stationary anchors to determine its position.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+## How to Build It
 
-## Project layout
+Our primary documentatio for how to re-create our setup lives on [Instructables](https://www.instructables.com/id/JARVAS-Indoor-Positioning-System/).
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Source Files
+
+All of our source files (including software, PCB design files, and MATLAB simulation code) live in our [GitHub repository](https://github.com/dddutz/jarvas-indoor-positioning-system/).
+
+## Technical Details
+
+This website documents some of the more interesting technical aspects of the project. If you're looking to modify, extend, or get inspiration from what we did, read on.

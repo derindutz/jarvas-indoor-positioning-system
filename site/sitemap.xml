@@ -19,6 +19,14 @@
 
     
     <url>
+     <loc>None/firmware/</loc>
+     <lastmod>2016-12-14</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
      <loc>None/localization/</loc>
      <lastmod>2016-12-14</lastmod>
      <changefreq>daily</changefreq>
