@@ -3,3 +3,10 @@ theme: readthedocs
 pages:
 - Home: index.md
 - Hardware: hardware.md
+- Localization Algorithm: localization.md
+- Filtering: filtering.md
+
+extra_javascript:
+- http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML
+markdown_extensions:
+- math
