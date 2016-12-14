@@ -13,7 +13,7 @@ void setup() {
   delay(1000);
   DW1000Ranging.initCommunication(PIN_RST, PIN_SS, PIN_IRQ);
   DW1000Ranging.attachNewRange(newRange);
-  DW1000Ranging.startAsAnchor("1A:1A:1A:1A:1A:1A:1A:1A", DW1000.MODE_LONGDATA_RANGE_ACCURACY);
+  DW1000Ranging.startAsAnchor("3A:1A:1A:1A:1A:1A:1A:1A", DW1000.MODE_LONGDATA_RANGE_ACCURACY);
 }
 
 void loop() {
@@ -32,3 +32,4 @@ void newRange() {
   // Empty.  
 }
 
+// 23 26 3

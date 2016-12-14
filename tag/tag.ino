@@ -15,14 +15,14 @@
 #define BEACON_2_ADDRESS 0x2A1A
 #define BEACON_3_ADDRESS 0x1A3A
 
-#define BEACON_1_X 0.0f
-#define BEACON_1_Y 0.0f
+#define BEACON_1_X 0.00f
+#define BEACON_1_Y 7.01f
 
 #define BEACON_2_X 0.0f
-#define BEACON_2_Y 6.097f
+#define BEACON_2_Y 0.0f
 
-#define BEACON_3_X 6.076f
-#define BEACON_3_Y 6.096f
+#define BEACON_3_X 7.92f
+#define BEACON_3_Y 7.92f
 
 #define BEACON_1_OFFSET 0.0368f
 #define BEACON_1_MULTIPLIER 1.0692f
