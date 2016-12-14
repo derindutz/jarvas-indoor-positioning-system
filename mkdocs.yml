@@ -1,2 +1,5 @@
 site_name: JARVAS Indoor Positioning System
 theme: readthedocs
+pages:
+- Home: index.md
+- Hardware: hardware.md
