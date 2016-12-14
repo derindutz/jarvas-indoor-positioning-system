@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing Arduino Firmware - JARVAS Indoor Positioning System</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Installing Arduino Firmware";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> JARVAS Indoor Positioning System</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../hardware/">Hardware</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Installing Arduino Firmware</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#programming-arduino-firmware-on-an-atmega32u4">Programming Arduino Firmware on an Atmega32U4</a></li>
+                
+                    <li><a class="toctree-l4" href="#what-youll-need">What you'll need</a></li>
+                
+                    <li><a class="toctree-l4" href="#instructions">Instructions</a></li>
+                
+                    <li><a class="toctree-l4" href="#notes-and-references">Notes and References</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../localization/">Localization Algorithm</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../filtering/">Filtering</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">JARVAS Indoor Positioning System</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Installing Arduino Firmware</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="programming-arduino-firmware-on-an-atmega32u4">Programming Arduino Firmware on an Atmega32U4</h1>
+<p>This page is not really specific to this project and should be useful to anyone trying to program Arduino firmware onto an <a href="http://www.atmel.com/Images/Atmel-7766-8-bit-AVR-ATmega16U4-32U4_Datasheet.pdf">Atmega32U4</a> chip.</p>
+<h2 id="what-youll-need">What you'll need</h2>
+<p>You will need:</p>
+<ul>
+<li>An ICSP programmer (such as the <a href="http://www.atmel.com/tools/jtagice3.aspx">JTAGICE3</a>)</li>
+<li>The <a href="http://www.nongnu.org/avrdude/">avrdude</a> software</li>
+<li>Firmware for the chip. We used SparkFun's <a href="https://cdn.sparkfun.com/datasheets/Dev/Arduino/Boards/32U4Note.pdf">Caterina</a> bootloader (Caterina-promicro8.bin from <a href="https://github.com/sparkfun/Arduino_Boards/tree/master/sparkfun/avr/bootloaders/caterina">here</a>)</li>
+<li>A board with an Atmega32U4 and an ICSP header, such as our <a href="../../hardware/#the-tag">Tag Board</a></li>
+</ul>
+<h3 id="tip-for-linux-users">Tip for Linux users</h3>
+<p>You may need to setup port permission for your programmer. For the JTAGICE3, you'll need to create a <code>/etc/udev/rules.d/98-local-jtagice3.rules</code> file with the following line:</p>
+<pre><code>SUBSYSTEM==&quot;usb&quot;, ATTRS{idVendor}==&quot;03eb&quot;, ATTRS{idProduct}==&quot;2140&quot;, GROUP=&quot;dialout&quot;
+</code></pre>
+
+<p>Also, be sure your user is in the <code>dialout</code> group.</p>
+<h2 id="instructions">Instructions</h2>
+<p><img alt="alt text" src="../img/programmer.jpg" title="JTAGICE3 programmer hooked up to JARVAS tag board" /></p>
+<h3 id="step-1-hook-up-your-programmer">Step 1: Hook up your programmer</h3>
+<p>Connect your programmer to the ICSP header on your board. Double check the pinouts and orientations (many ICSP connectors are not keyed) before powering things up.</p>
+<p>Remember that your programmer generally does not supply power to the board, so you'll need to supply that yourself.</p>
+<h3 id="step-2-test-the-connection">Step 2: Test the connection</h3>
+<p>The following command will read the three sets of fuse bits from the microcontroller and write the values to three text files on your system:</p>
+<pre><code>avrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U efuse:r:efuse.hex:h -U hfuse:r:hfuse.hex:h -U lfuse:r:lfuse.hex:h
+</code></pre>
+
+<p>You should get some output that ends with:</p>
+<pre><code>avrdude: safemode: hfuse reads as 99
+avrdude: safemode: efuse reads as F3
+avrdude: safemode: Fuses OK (E:F3, H:99, L:5E)
+
+avrdude done.  Thank you.
+</code></pre>
+
+<h3 id="step-3-programming">Step 3: Programming</h3>
+<p>With the firmware file placed in your working directory, run the following command to set the fuse bits and program your chip:</p>
+<pre><code>avrdude -v -pm32u4 -cjtag3isp -Pusb -B22 -U flash:w:Caterina-promicro8.hex -U hfuse:w:0xd8:m -U lfuse:w:0xff:m -U efuse:w:0xfe:m
+</code></pre>
+
+<p>It may fail to write the efuse. If prompted, answer 'y' to retry. If it fails, don't worry.</p>
+<h3 id="step-4-try-it">Step 4: Try it!</h3>
+<p>Plug your board into your computer over USB and program it with the Arduino software.</p>
+<h2 id="notes-and-references">Notes and References</h2>
+<p>The above commands assume you're using a JTAGICE3 programmer to program an Atmega32U4 clocekd at 8 MHz with a 3.3V supply voltage. If any of those things are not quite the same for you, you'll have to adjust things a bit.</p>
+<p>You can find fuse bit settings that go along with the various SparkFun firmwares on <a href="https://github.com/sparkfun/Arduino_Boards/blob/master/sparkfun/avr/bootloaders/caterina/program.txt">their repository</a>.</p>
+<h3 id="useful-references">Useful References</h3>
+<ul>
+<li><a href="http://www.engbedded.com/fusecalc/">Fuse bit calculator</a></li>
+<li><a href="http://www.atmel.com/webdoc/jtagice3/jtagice3.using_ocd_physical_spi.html#jtagice3.spi_header_pinout">JTAGICE3 Pinout</a></li>
+<li><a href="http://www.nongnu.org/avrdude/user-manual/avrdude_4.html">AVRDUDE Refernce</a></li>
+<li>A <a href="http://electronut.in/bootloader-atmega32u4/">blog post</a> from someone else who has done this</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../localization/" class="btn btn-neutral float-right" title="Localization Algorithm"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../hardware/" class="btn btn-neutral" title="Hardware"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../hardware/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../localization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

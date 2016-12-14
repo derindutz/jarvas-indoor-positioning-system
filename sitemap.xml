@@ -3,8 +3,40 @@
 
     
     <url>
-     <loc>/</loc>
-     <lastmod>2016-12-08</lastmod>
+     <loc>None/</loc>
+     <lastmod>2016-12-14</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/hardware/</loc>
+     <lastmod>2016-12-14</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/firmware/</loc>
+     <lastmod>2016-12-14</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/localization/</loc>
+     <lastmod>2016-12-14</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/filtering/</loc>
+     <lastmod>2016-12-14</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Localization Algorithm - JARVAS Indoor Positioning System</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Localization Algorithm";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> JARVAS Indoor Positioning System</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../hardware/">Hardware</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../firmware/">Installing Arduino Firmware</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Localization Algorithm</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#localization">Localization</a></li>
+                
+                    <li><a class="toctree-l4" href="#linear-least-squares-estimation">Linear Least Squares Estimation</a></li>
+                
+                    <li><a class="toctree-l4" href="#matlab-implementation">MATLAB Implementation</a></li>
+                
+                    <li><a class="toctree-l4" href="#c-implementation">C Implementation</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../filtering/">Filtering</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">JARVAS Indoor Positioning System</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Localization Algorithm</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="localization">Localization</h1>
+<p>JARVAS estimates your position using a linear least squares algorithm based
+on time of flight ranging data. On this page, we will break down how this
+works in detail.</p>
+<p>Imagine you are on a ship and can see a single lighthouse in the distance. 
+Let's say you can tell the distance to this lighthouse but nothing else.
+If you were looking at a map and knew the location of the lighthouse, you
+could draw a circle around the lighthouse and know that you were somewhere
+along the circle.</p>
+<p>Now let's say you can see a second lighthouse and also your know distance to 
+it (but not, let's pretend, the angle between the two lighthouses). Now you
+have two circles you can draw. Assuming the two lighthouses are in different
+locations, the circles will overlap in one or two locations. Finally, by
+adding a third lighthouse, you can figure out which point you are at.</p>
+<p><img alt="alt text" src="../img/lighthouse.png" title="Illustration of the light house analogy" /></p>
+<p>Derived from image by pixelbuddha [CC BY 3.0 (http://creativecommons.org/licenses/by/3.0)], via Wikimedia Commons</p>
+<h2 id="linear-least-squares-estimation">Linear Least Squares Estimation</h2>
+<p>If you aren't familiar with linear least squares estimation, we recommend some
+background reading before jumping into this:</p>
+<p><a href="https://en.wikipedia.org/wiki/Linear_least_squares_(mathematics)">Wikipedia: Linear Least Squares</a></p>
+<p><a href="http://ee263.stanford.edu/lectures/ls.pdf">Stanford Linear Algebra Course Notes</a></p>
+<p>Our linearized technique is based on the first method described in 
+"Linear least squares localization in sensor networks" by Yue Wang (DOI: 
+<a href="http://link.springer.com/article/10.1186/s13638-015-0298-1">10.1186/s13638-015-0298-1</a>).</p>
+<p>In general, localization based on a set of distances in a non-linear problem,
+however there are linear approximtaions that work quite well.</p>
+<p>Each anchor has some known position <script type="math/tex">(x_i,y_i</script> and is can measure a distance
+<script type="math/tex">\hat{d_i}</script> to the tag. For a single anchor <script type="math/tex">i</script> ranging to a tag at
+position <script type="math/tex">(x,y)</script>, this
+gives us the simple geometric equation:</p>
+<p>
+<script type="math/tex; mode=display"> (x-x_i)^2+(y-y_i)^2=d_i^2 </script>
+</p>
+<p>We can then re-arrange this expression as follows:</p>
+<p>
+<script type="math/tex; mode=display"> x^2-2xx_i+x_i^2+y^2-2yy_i+y_i^2=\hat{d}_i^2 \\
+-2xx_i - 2yy_i + (x^2+y^2) = \hat{d}_i^2 - x_i^2 - y_i^2 </script>
+</p>
+<p>We have three (or more) anchors, so we can write at least three of these
+equations. Written in matrix form, we have:</p>
+<p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+-2x_1 & -2y_1 & 1 \\
+-2x_2 & -2y_2 & 1 \\
+-2x_3 & -2y_3 & 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y \\
+x^2 + y^2
+\end{bmatrix}
+=
+\begin{bmatrix}
+\hat{d}_1^2-x_1^2-y_1^2 \\
+\hat{d}_2^2-x_2^2-y_2^2 \\
+\hat{d}_3^2-x_3^2-y_3^2
+\end{bmatrix}
+</script>
+</p>
+<p>This gives us the standard form:</p>
+<p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+x \\
+y \\
+x^2 + y^2
+\end{bmatrix}_{ls}
+=
+\begin{bmatrix}
+-2x_1 & -2y_1 & 1 \\
+-2x_2 & -2y_2 & 1 \\
+-2x_3 & -2y_3 & 1
+\end{bmatrix}^\dagger
+\begin{bmatrix}
+\hat{d}_1^2-x_1^2-y_1^2 \\
+\hat{d}_2^2-x_2^2-y_2^2 \\
+\hat{d}_3^2-x_3^2-y_3^2
+\end{bmatrix}
+</script>
+</p>
+<p>The left side of the equation is what we want to solve for. Specifically, we are interested in the first two terms of the vector: <script type="math/tex">x</script> and <script type="math/tex">y</script>.</p>
+<p>On the right, the large matrix that we have to take the 
+<a href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_pseudoinverse">pseudo-inverse</a>
+of is a function only of the configuration of the system. It changes only if the anchors move, not if the tag moves. This is very important because taking the pseudo-inverse requires a non-trivial number of computations, especially as you start adding more anchors.</p>
+<p>At runtime, this works out to be a single matrix-vector multiplication of a 3x3 by a 3x1.</p>
+<h2 id="matlab-implementation">MATLAB Implementation</h2>
+<p><img alt="alt text" src="../img/example_ranging.png" title="Screenshot of MATLAB simulation" /></p>
+<p>In order to test this algorith, we created a MATLAB script that takes in a set of positions and ranges and outputs a graph of the real and estimated location of the tag. If you are intersted in extending this project to use any of several possible better linearized algorithms, this MATLAB script would be a good starting point.</p>
+<p>You can find the two MATLAB files <code>rangepositioning.m</code> and <code>plotposition.m</code> in the <a href="https://github.com/dddutz/jarvas-indoor-positioning-system/tree/master/simulation">simulation folder</a> of our repository.</p>
+<h2 id="c-implementation">C Implementation</h2>
+<p>In the JARVAS system, this processing is run on the tag iself. The C implementaiton of this algorithm uses the Arduino MatrixMath library and lives in the <a href="https://github.com/dddutz/jarvas-indoor-positioning-system/blob/master/tag/tag.ino">tag sketch</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../filtering/" class="btn btn-neutral float-right" title="Filtering"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../firmware/" class="btn btn-neutral" title="Installing Arduino Firmware"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../firmware/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../filtering/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

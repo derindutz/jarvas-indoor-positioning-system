@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hardware - JARVAS Indoor Positioning System</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Hardware";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> JARVAS Indoor Positioning System</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Hardware</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#jarvas-hardware">JARVAS Hardware</a></li>
+                
+                    <li><a class="toctree-l4" href="#the-tag">The Tag</a></li>
+                
+                    <li><a class="toctree-l4" href="#the-anchor">The Anchor</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../firmware/">Installing Arduino Firmware</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../localization/">Localization Algorithm</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../filtering/">Filtering</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">JARVAS Indoor Positioning System</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Hardware</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="jarvas-hardware">JARVAS Hardware</h1>
+<p><img src="../img/tag_render.png" width="50%" alt="JARVAS Tag" /><img src="../img/anchor_render.png" width="50%" alt="JARVAS Anchor" /></p>
+<p>The core of the JARVAS system is the DWM1000 (
+<a href="http://www.decawave.com/products/dwm1000-module">product page</a>,
+<a href="http://www.decawave.com/sites/default/files/resources/dwm1000-datasheet-v1.3.pdf">datasheet</a>
+) radio module, an ultra wideband transciever module optimized for time of
+flight ranging systems, and the Atmega32U4 processor.</p>
+<p>There are two versions of the JARVAS hardware: a base station board that
+supports WiFi (using an
+<a href="https://nurdspace.nl/images/e/e0/ESP8266_Specifications_English.pdf">ESP8266</a>
+) and is designed for easy debugging, and a small, low-cost tag module.
+The system requires at least one of the anchors have WiFi support so transmit
+location data to a server, however all other anchors and tags in the system
+may use either the larger base station board or the small tag board.</p>
+<h2 id="the-tag">The Tag</h2>
+<p><img alt="alt text" src="../img/tag_quarter.jpg" title="JARVAS Tag PCB" /></p>
+<p>The tag board hosts an Atmega32U4, a single-cell LiPo/Li-Ion connector, a few
+debugging LEDs, and the DWM1000 radio module. It is essentially a
+purpose-built version of the popular <a href="https://www.sparkfun.com/products/12587">SparkFun Pro Micro</a>
+or the <a href="https://www.adafruit.com/product/296">Adafruit Atmega32U4 breakout</a>
+with a DWM1000 module built in.</p>
+<p>In total, it measures 1.5"x0.9" without the programming tag.</p>
+<p>Note that while we call this this "tag", it is completely capable of being
+used as an anchor as well, provided that there is at least one anchor in the
+system which supports WiFi.</p>
+<h3 id="programming-header">Programming Header</h3>
+<p><img alt="alt text" src="../img/two_tags.jpg" title="Tags with their programming headers" /></p>
+<p>The tag comes with a break-away section for initial programming. The
+section at the top contains test points for the 3.3 V and GND rails and an
+ICSP header. This ICSP header can be used to program the Atmega32U4. If you
+choose to install the Arduino firmware, as described <a href="../firmware">here</a>,
+you can program this board directly over USB through the Arduino software.
+Once you verify that everythings is working, this top section can be broken
+off to reduce the size and height of the PCB.</p>
+<p><img alt="alt text" src="../img/tag_icsp_traces.png" title="ICSP traces" /></p>
+<h2 id="the-anchor">The Anchor</h2>
+<p><img alt="alt text" src="../img/banana_realization.png" title="An anchor board next to a render" /></p>
+<p>The anchor is the larger, more debug-friendly, and WiFi-supporting version.
+It is extremely similar to the tag except for the addition of an ESP8266 WiFi
+Module and using an off-the-shelf Arduino Pro Micro instead of having an
+Atmega32U4 on-board. This means that no programmer is required to get this
+board up and running. The downside, though, is that it is significantly larger
+and costs more.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../firmware/" class="btn btn-neutral float-right" title="Installing Arduino Firmware"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../firmware/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
