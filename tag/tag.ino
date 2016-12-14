@@ -5,9 +5,13 @@
 #include <math.h>
 
 // If false, then use the calibration. If true, don't use the calibration.
-#define CALIBRATE_OFFSET false
-#define CALIBRATE_MULTIPLIER false
-#define CALIBRATION_DISTANCE 1.0
+#define CALIBRATE_FIRST false
+#define CALIBRATE_SECOND false
+
+//First distance from ground truth 2 meters
+//Second from ground truth 5 meters.
+#define BEACON_1_FIRSTDIST 2.368
+#define BEACON_1_SECONDDIST 5.372
 
 #define USE_MEDIAN_FILT true
 
@@ -24,14 +28,35 @@
 #define BEACON_3_X 7.92f
 #define BEACON_3_Y 7.92f
 
-#define BEACON_1_OFFSET 0.0368f
-#define BEACON_1_MULTIPLIER 1.0692f
+//First distance from ground truth 2 meters
+//Second from ground truth 5 meters.
+#define BEACON_1_FIRSTDIST 2.368
+#define BEACON_1_SECONDDIST 5.372
+float beacon_1_slope = 3.0f/(BEACON_1_SECONDDIST-BEACON_1_FIRSTDIST);
+float beacon_1_offset = 5.0f-(1.0f/beacon_1_slope*BEACON_1_SECONDDIST);
 
-#define BEACON_2_OFFSET 0.6336f
-#define BEACON_2_MULTIPLIER 1.0440f
+//First distance from ground truth 2 meters
+//Second from ground truth 5 meters.
+#define BEACON_2_FIRSTDIST 2.368
+#define BEACON_2_SECONDDIST 5.372
+float beacon_2_slope = 3.0f/(BEACON_2_SECONDDIST-BEACON_2_FIRSTDIST);
+float beacon_2_offset = 5.0f-(1.0f/beacon_2_slope*BEACON_2_SECONDDIST);
 
-#define BEACON_3_OFFSET 0.5575f
-#define BEACON_3_MULTIPLIER 1.0666f
+//First distance from ground truth 2 meters
+//Second from ground truth 5 meters.
+#define BEACON_3_FIRSTDIST 2.368
+#define BEACON_3_SECONDDIST 5.372
+float beacon_3_slope = 3.0f/(BEACON_3_SECONDDIST-BEACON_3_FIRSTDIST);
+float beacon_3_offset = 5.0f-(1.0f/beacon_3_slope*BEACON_3_SECONDDIST);
+//
+//#define BEACON_1_OFFSET 0.0368f
+//#define BEACON_1_MULTIPLIER 1.0692f
+//
+//#define BEACON_2_OFFSET 0.6336f
+//#define BEACON_2_MULTIPLIER 1.0440f
+//
+//#define BEACON_3_OFFSET 0.5575f
+//#define BEACON_3_MULTIPLIER 1.0666f
 
 // connection pins
 const uint8_t PIN_RST = 3; // reset pin
@@ -177,50 +202,43 @@ void newRange() {
   range = DW1000Ranging.getDistantDevice()->getRange();
   if(range < 0) address = NULL;
   if(address == BEACON_1_ADDRESS){
-    range *= CALIBRATE_MULTIPLIER?1.0f:BEACON_1_MULTIPLIER;
-    range += CALIBRATE_OFFSET?0.0f:BEACON_1_OFFSET;
+    range *= CALIBRATE_FIRST||CALIBRATE_SECOND?1.0f:beacon_1_slope;
+    range -= CALIBRATE_FIRST||CALIBRATE_SECOND?0.0f:beacon_1_offset;
+    
     cir_enqueue(cir1,range);
     dist[0] = (USE_MEDIAN_FILT)?cir_median(cir1):range;
     
-    if(CALIBRATE_OFFSET){
+    if(CALIBRATE_FIRST||CALIBRATE_SECOND){
       if(dist[0] < shortestDistanceBeacon1 && dist[0] > 0){
         shortestDistanceBeacon1 = dist[0];
       }
     }
   }
   else if(address == BEACON_2_ADDRESS){
-    range *= CALIBRATE_MULTIPLIER?1.0f:BEACON_2_MULTIPLIER;
-    range += CALIBRATE_OFFSET?0.0f:BEACON_2_OFFSET;
+    range *= CALIBRATE_FIRST||CALIBRATE_SECOND?1.0f:beacon_2_slope;
+    range -= CALIBRATE_FIRST||CALIBRATE_SECOND?0.0f:beacon_2_offset;
     cir_enqueue(cir2,range);
     dist[1] = (USE_MEDIAN_FILT)?cir_median(cir2):range;
     
-    if(CALIBRATE_OFFSET){
+    if(CALIBRATE_FIRST||CALIBRATE_SECOND){
       if(dist[1] < shortestDistanceBeacon2 && dist[1] > 0){
         shortestDistanceBeacon2 = dist[1];
       }
     }
   }
   else if(address == BEACON_3_ADDRESS){
-    range *= CALIBRATE_MULTIPLIER?1.0f:BEACON_3_MULTIPLIER;
-    range += CALIBRATE_OFFSET?0.0f:BEACON_3_OFFSET;
+    range *= CALIBRATE_FIRST||CALIBRATE_SECOND?1.0f:beacon_3_slope;
+    range -= CALIBRATE_FIRST||CALIBRATE_SECOND?0.0f:beacon_3_offset;
     cir_enqueue(cir3,range);
     dist[2] = (USE_MEDIAN_FILT)?cir_median(cir3):range;
     
-    if(CALIBRATE_OFFSET){
+    if(CALIBRATE_FIRST||CALIBRATE_SECOND){
       if(dist[2] < shortestDistanceBeacon3 && dist[2] > 0){
         shortestDistanceBeacon3 = dist[2];
       }
     }
   }
-  if(CALIBRATE_OFFSET){
-    Serial.print("Offset 1: ");Serial.print(shortestDistanceBeacon1);Serial.print(" Offset 2: ");Serial.print(shortestDistanceBeacon2);Serial.print(" Offset 3: ");Serial.print(shortestDistanceBeacon3);
-  }
-  else if(CALIBRATE_MULTIPLIER){
-    Serial.print("MULT 1: ");Serial.print(dist[0]/CALIBRATION_DISTANCE);Serial.print(" MULT 2: ");Serial.print(dist[1]/CALIBRATION_DISTANCE);Serial.print(" MULT 3: ");Serial.print(dist[2]/CALIBRATION_DISTANCE);
-  }
-  else{
-    Serial.print("1: ");Serial.print(dist[0]);Serial.print(" 2: ");Serial.print(dist[1]);Serial.print(" 3: ");Serial.print(dist[2]);
-  }
+  Serial.print("1: ");Serial.print(dist[0]);Serial.print(" 2: ");Serial.print(dist[1]);Serial.print(" 3: ");Serial.print(dist[2]);
   
   // ITERATIVE STEPS BELOW
 
