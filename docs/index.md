@@ -6,7 +6,7 @@ JARVAS (Just A Rather Very Average System) is an indoor positioning system, in w
 
 ## How to Build It
 
-Our primary documentatio for how to re-create our setup lives on [Instructables](https://www.instructables.com/id/JARVAS-Indoor-Positioning-System/).
+Our primary documentation for how to re-create our setup lives on [Instructables](https://www.instructables.com/id/JARVAS-Indoor-Positioning-System/).
 
 ## Source Files
 
