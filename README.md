@@ -1,6 +1,6 @@
 # JARVAS Indoor Positioning System
 
-![alt text](img/overview.jpg "JARVAS System")
+![alt text](docs/img/overview.jpg "JARVAS System")
 
 JARVAS (Just A Rather Very Average System) is an indoor positioning system, in which a wearable tag communicates with multiple stationary anchors to determine its position.
 
