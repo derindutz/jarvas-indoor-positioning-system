@@ -12,4 +12,4 @@ As you can see, the noise is dominated by sharp peaks lasting only a sample or t
 
 Shown below are the results of a simple median filter overlayed in red against another raw data set in black.
 
-![alt text](img/median_filter.jpg) "Median filtered data")
+![alt text](img/median_filter.jpg)
